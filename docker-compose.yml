@@ -1,0 +1,30 @@
+version: '3.7'
+services:
+  postgresql:
+    container_name: postgresql
+    image: bitnami/postgresql:11.10.0
+    ports:
+      - 5432:5432
+    volumes:
+      - postgresql:/bitnami/postgresql
+    environment:
+      - POSTGRESQL_PASSWORD=MmksLu*R^N#xkswpzRiU2A8jhnvzX
+      - POSTGRESQL_DATABASE=fpass
+    restart: always
+
+  backend:
+    container_name: backend
+    tty: true
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    volumes:
+      - ./backend:/backend
+      - /backend/node_modules
+    ports:
+      - 3333:3000
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - postgresql
+    restart: always

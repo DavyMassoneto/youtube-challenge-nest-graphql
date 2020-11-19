@@ -35,7 +35,11 @@
     "import-helpers/order-imports": [
       "error", {
         "newlinesBetween": "always",
-        "groups": ["module", ["/^..\//", "/^.\//"], ["parent", "sibling", "index"]],
+        "groups": [
+          "module",
+          ["/^@services/", "/^@interfaces/", "/^@modules/", "/^@config/"],
+          ["parent", "sibling", "index"]
+        ],
         "alphabetize": {
           "order": "asc",
           "ignoreCase": true

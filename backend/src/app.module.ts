@@ -1,27 +1,36 @@
-import * as Joi from '@hapi/joi'
 import { Module } from '@nestjs/common'
-import { ConfigModule } from '@nestjs/config'
+import { ConfigModule, ConfigService } from '@nestjs/config'
+import { GraphQLModule } from '@nestjs/graphql'
+import { TypeOrmModule } from '@nestjs/typeorm'
+import { join } from 'path'
 
-import { AppController } from './app.controller'
-import { AppService } from './app.service'
+import { AppController } from 'src/app.controller'
+import { AppService } from 'src/app.service'
+import { TypeOrmConfigService } from 'src/config/typeorm.config.service'
+import { UsersModule } from 'src/users/users.module'
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      validationSchema: Joi.object({
-        TYPEORM_HOST: Joi.string().required(),
-        TYPEORM_USERNAME: Joi.string().required(),
-        TYPEORM_PASSWORD: Joi.string().required(),
-        TYPEORM_DATABASE: Joi.string().required(),
-        TYPEORM_PORT: Joi.number().required(),
-        TYPEORM_ENTITIES: Joi.string().required(),
-        TYPEORM_MIGRATIONS: Joi.string().required(),
-        TYPEORM_MIGRATIONS_RUN: Joi.string(),
-        TYPEORM_MIGRATIONS_DIR: Joi.string(),
-        TYPEORM_LOGGING: Joi.boolean().required(),
-        HTTP_PORT: Joi.number().required(),
+    ConfigModule.forRoot({ isGlobal: true }),
+    GraphQLModule.forRootAsync({
+      useFactory: () => ({
+        context: ({ req }) => ({ req }),
+        typeDefs: [],
+        resolvers: [],
+        typePaths: ['./**/*.graphql'],
+        installSubscriptionHandlers: true,
+        definitions: {
+          path: join(process.cwd(), 'graphql.schema.ts'),
+          outputAs: 'class',
+        },
       }),
     }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useClass: TypeOrmConfigService,
+      inject: [ConfigService],
+    }),
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

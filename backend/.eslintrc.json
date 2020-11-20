@@ -36,9 +36,7 @@
       "error", {
         "newlinesBetween": "always",
         "groups": [
-          "module",
-          ["/^@services/", "/^@interfaces/", "/^@modules/", "/^@config/"],
-          ["parent", "sibling", "index"]
+          "module", ["/^src/"], ["parent", "sibling", "index"]
         ],
         "alphabetize": {
           "order": "asc",

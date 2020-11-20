@@ -3,8 +3,8 @@ import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm'
 import { join } from 'path'
 
 const baseDir = join(__dirname, '..')
-const entities = join(baseDir, 'db', 'entities', '*.entity.js`')
-const migrations = join(baseDir, 'db', 'migrations', '*.js')
+const entities = join(baseDir, '**', '*.entity.js`')
+const migrations = join(baseDir, '..', 'migrations', '*.js')
 
 @Injectable()
 export class TypeOrmConfigService implements TypeOrmOptionsFactory {
@@ -21,10 +21,11 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       migrationsRun: process.env.TYPEORM_MIGRATIONS_RUN === 'TRUE',
       logging: process.env.TYPEORM_LOGGING === 'TRUE',
       cli: {
-        migrationsDir: 'src/db/migrations',
-        entitiesDir: 'src/db/entities',
+        migrationsDir: migrations,
+        entitiesDir: entities,
       },
       synchronize: true,
+      autoLoadEntities: true,
     }
   }
 }

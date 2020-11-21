@@ -24,7 +24,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
         migrationsDir: migrations,
         entitiesDir: entities,
       },
-      synchronize: true,
+      synchronize: false,
       autoLoadEntities: true,
     }
   }

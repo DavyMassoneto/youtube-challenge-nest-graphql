@@ -7,7 +7,7 @@ const entities = join(baseDir, '**', '*.entity.js`')
 const migrations = join(baseDir, '..', 'migrations', '*.js')
 
 @Injectable()
-export class TypeOrmConfigService implements TypeOrmOptionsFactory {
+export default class TypeOrmConfigService implements TypeOrmOptionsFactory {
   createTypeOrmOptions(): TypeOrmModuleOptions {
     return {
       type: 'postgres',

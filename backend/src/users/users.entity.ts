@@ -14,6 +14,7 @@ import Message from 'src/messages/messages.entity'
 @ObjectType()
 @Entity({ name: 'users' })
 export default class Users {
+  @Field()
   @PrimaryGeneratedColumn()
   id: string
 
@@ -22,16 +23,16 @@ export default class Users {
   email: string
 
   @Field()
-  @CreateDateColumn()
-  created_at: Date
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date
 
   @Field()
-  @UpdateDateColumn()
-  updated_at: Date
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date
 
   @Field()
-  @DeleteDateColumn()
-  deleted_at: Date
+  @DeleteDateColumn({ name: 'deleted_at' })
+  deletedAt: Date
 
   // Associations
   @OneToMany(() => Message, (message) => message.userConnection)

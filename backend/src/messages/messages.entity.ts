@@ -14,30 +14,30 @@ import Users from 'src/users/users.entity'
 
 @ObjectType()
 @Entity({ name: 'messages' })
-export default class Message {
+export default class Messages {
   @Field()
   @PrimaryGeneratedColumn()
   id: string
 
   @Field()
-  @Column()
-  user_id: string
+  @Column({ name: 'user_id' })
+  userId: string
 
   @Field()
   @Column()
   content: string
 
   @Field()
-  @CreateDateColumn()
-  created_at: Date
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date
 
   @Field()
-  @UpdateDateColumn()
-  updated_at: Date
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date
 
   @Field()
-  @DeleteDateColumn()
-  deleted_at: Date
+  @DeleteDateColumn({ name: 'deleted_at' })
+  deletedAt: Date
 
   @Field(() => Users)
   user: Users

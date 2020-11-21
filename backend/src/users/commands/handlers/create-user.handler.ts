@@ -12,7 +12,7 @@ export default class CreateUserHandler implements ICommandHandler<CreateUserComm
   async execute(command: CreateUserCommand): Promise<Users> {
     const usersRepository = getRepository(Users)
     const user = usersRepository.create()
-    user.email = command.email
+    user.email = command.email.toLowerCase().trim()
 
     const userDB: Users = await usersRepository.save(user)
 

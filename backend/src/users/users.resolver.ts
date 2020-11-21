@@ -2,6 +2,7 @@ import { CommandBus, QueryBus } from '@nestjs/cqrs'
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
 
 import CreateUserCommand from 'src/users/commands/impl/create-user.command'
+import EmailUserQuery from 'src/users/queries/impl/email-user.query'
 import UserQuery from 'src/users/queries/impl/user.query'
 import UsersQuery from 'src/users/queries/impl/users.query'
 import Users from 'src/users/users.entity'
@@ -19,6 +20,11 @@ export default class UsersResolver {
   @Query(() => Users, { nullable: true })
   public async user(@Args('id') id: string): Promise<Users> {
     return await this.queryBus.execute(new UserQuery(id))
+  }
+
+  @Query(() => Users, { nullable: true })
+  public async emailUser(@Args('email') email: string): Promise<Users> {
+    return await this.queryBus.execute(new EmailUserQuery(email))
   }
 
   @Mutation(() => Users)

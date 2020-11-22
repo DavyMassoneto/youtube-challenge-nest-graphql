@@ -19,3 +19,4 @@
 ## Regras de negócio
 - [ ] O usuário não pode deletar mensagens de outro usuário
 - [x] O usuário não pode se registrar caso o e-mail já esteja em uso
+- [ ] O usuário não pode logar caso não esteja registrado

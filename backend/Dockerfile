@@ -13,4 +13,4 @@ RUN yarn global add @nestjs/cli --silent
 RUN yarn install --silent
 
 # Iniciar a aplicação
-CMD ["yarn", "start:dev"]
+CMD ["yarn", "start:debug"]

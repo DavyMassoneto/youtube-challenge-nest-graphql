@@ -2,6 +2,10 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type AuthPayload {
+  access_token: String!
+}
+
 type Messages {
   id: String!
   userId: String!
@@ -35,6 +39,7 @@ type Query {
 }
 
 type Mutation {
+  login(email: String!): AuthPayload!
   createMessage(data: MessagesInput!): Messages!
   createUser(data: UsersInput!): Users!
 }

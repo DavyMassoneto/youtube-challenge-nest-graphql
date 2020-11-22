@@ -3,7 +3,7 @@ import { getRepository } from 'typeorm'
 
 import CreateUserCommand from 'src/users/commands/impl/create-user.command'
 import UserCreatedEvent from 'src/users/events/impl/user-created.event'
-import Users from 'src/users/users.entity'
+import Users from 'src/users/models/users.entity'
 
 @CommandHandler(CreateUserCommand)
 export default class CreateUserHandler implements ICommandHandler<CreateUserCommand> {

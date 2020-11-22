@@ -2,10 +2,10 @@ import { CommandBus, CommandHandler, ICommandHandler } from '@nestjs/cqrs'
 import { getCustomRepository } from 'typeorm'
 
 import CreateMessageCommand from 'src/messages/commands/impl/create-message.command'
-import Messages from 'src/messages/messages.entity'
+import Messages from 'src/messages/models/messages.entity'
 import MessagesRepository from 'src/messages/repositories/messages.repository'
 import CreateUserCommand from 'src/users/commands/impl/create-user.command'
-import Users from 'src/users/users.entity'
+import Users from 'src/users/models/users.entity'
 
 @CommandHandler(CreateMessageCommand)
 export default class CreateMessageHandler implements ICommandHandler<CreateMessageCommand> {

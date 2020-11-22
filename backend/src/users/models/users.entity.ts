@@ -4,28 +4,23 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  JoinColumn,
-  ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm'
 
-import Users from 'src/users/users.entity'
+import Message from 'src/messages/models/messages.entity'
 
 @ObjectType()
-@Entity({ name: 'messages' })
-export default class Messages {
+@Entity({ name: 'users' })
+export default class Users {
   @Field()
   @PrimaryGeneratedColumn()
   id: string
 
   @Field()
-  @Column({ name: 'user_id' })
-  userId: string
-
-  @Field()
   @Column()
-  content: string
+  email: string
 
   @Field()
   @CreateDateColumn({ name: 'created_at' })
@@ -39,11 +34,7 @@ export default class Messages {
   @DeleteDateColumn({ name: 'deleted_at' })
   deletedAt: Date
 
-  @Field(() => Users)
-  user: Users
-
   // Associations
-  @ManyToOne(() => Users, (user) => user.messageConnection, { primary: true })
-  @JoinColumn({ name: 'user_id' })
-  userConnection: Promise<Users>
+  @OneToMany(() => Message, (message) => message.userConnection)
+  messageConnection: Promise<Message[]>
 }

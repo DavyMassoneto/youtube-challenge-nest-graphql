@@ -1,8 +1,8 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs'
 import { getRepository } from 'typeorm'
 
+import Users from 'src/users/models/users.entity'
 import UsersQuery from 'src/users/queries/impl/users.query'
-import Users from 'src/users/users.entity'
 
 @QueryHandler(UsersQuery)
 export default class UsersHandler implements IQueryHandler<UsersQuery> {

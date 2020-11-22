@@ -2,11 +2,11 @@ import { CommandBus, QueryBus } from '@nestjs/cqrs'
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
 
 import CreateUserCommand from 'src/users/commands/impl/create-user.command'
+import Users from 'src/users/models/users.entity'
+import UsersInput from 'src/users/models/users.input'
 import EmailUserQuery from 'src/users/queries/impl/email-user.query'
 import UserQuery from 'src/users/queries/impl/user.query'
 import UsersQuery from 'src/users/queries/impl/users.query'
-import Users from 'src/users/users.entity'
-import UsersInput from 'src/users/users.input'
 
 @Resolver(() => Users)
 export default class UsersResolver {

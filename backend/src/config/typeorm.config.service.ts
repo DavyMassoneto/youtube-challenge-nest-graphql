@@ -3,7 +3,7 @@ import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm'
 import { join } from 'path'
 
 const baseDir = join(__dirname, '..')
-const entities = join(baseDir, '**', '*.entity.js`')
+const entities = join(baseDir, '**', '**', '*.entity.js`')
 const migrations = join(baseDir, '..', 'migrations', '*.js')
 
 @Injectable()

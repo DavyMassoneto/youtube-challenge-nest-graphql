@@ -1,7 +1,7 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs'
 import { getCustomRepository } from 'typeorm'
 
-import Messages from 'src/messages/messages.entity'
+import Messages from 'src/messages/models/messages.entity'
 import MessageQuery from 'src/messages/queries/impl/message.query'
 import MessagesRepository from 'src/messages/repositories/messages.repository'
 

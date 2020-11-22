@@ -2,13 +2,13 @@ import { CommandBus, QueryBus } from '@nestjs/cqrs'
 import { Args, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql'
 
 import CreateMessageCommand from 'src/messages/commands/impl/create-message.command'
-import Messages from 'src/messages/messages.entity'
-import MessagesInput from 'src/messages/messages.input'
+import Messages from 'src/messages/models/messages.entity'
+import MessagesInput from 'src/messages/models/messages.input'
 import MessageQuery from 'src/messages/queries/impl/message.query'
 import MessagesQuery from 'src/messages/queries/impl/messages.query'
 import UserMessagesQuery from 'src/messages/queries/impl/user-messages.query'
+import Users from 'src/users/models/users.entity'
 import UserQuery from 'src/users/queries/impl/user.query'
-import Users from 'src/users/users.entity'
 
 @Resolver(() => Messages)
 export default class MessagesResolver {

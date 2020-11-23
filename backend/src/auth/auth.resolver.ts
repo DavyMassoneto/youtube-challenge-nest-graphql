@@ -3,8 +3,8 @@ import { CommandBus } from '@nestjs/cqrs'
 import { Args, Mutation, Resolver } from '@nestjs/graphql'
 
 import PerformLoginCommand from 'src/auth/commands/impl/perform-login.command'
-import LocalAuthGuard from 'src/auth/local-auth.guard'
-import AuthPayload from 'src/auth/models/auth-payload'
+import AuthPayload from 'src/auth/dto/auth-payload'
+import LocalAuthGuard from 'src/auth/guards/local-auth.guard'
 
 @Resolver('Auth')
 export default class AuthResolver {

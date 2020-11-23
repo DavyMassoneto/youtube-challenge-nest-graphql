@@ -3,7 +3,7 @@ import { CommandHandler, ICommandHandler, QueryBus } from '@nestjs/cqrs'
 import { JwtService } from '@nestjs/jwt'
 
 import PerformLoginCommand from 'src/auth/commands/impl/perform-login.command'
-import AuthPayload from 'src/auth/models/auth-payload'
+import AuthPayload from 'src/auth/dto/auth-payload'
 import Users from 'src/users/models/users.entity'
 import EmailUserQuery from 'src/users/queries/impl/email-user.query'
 
@@ -18,7 +18,7 @@ export default class PerformLoginHandler implements ICommandHandler<PerformLogin
       throw new NotFoundException(`User with email ${email} does not exist`)
     }
     const payload = new AuthPayload()
-    payload.token = this.jwtService.sign({ email: user.email, id: user.id })
+    payload.token = this.jwtService.sign({ userId: user.id })
     return payload
   }
 }

@@ -4,7 +4,7 @@ import { PassportStrategy } from '@nestjs/passport'
 import { Strategy } from 'passport-local'
 
 import PerformLoginCommand from 'src/auth/commands/impl/perform-login.command'
-import AuthPayload from 'src/auth/models/auth-payload'
+import AuthPayload from 'src/auth/dto/auth-payload'
 
 @Injectable()
 export default class LocalStrategy extends PassportStrategy(Strategy) {

@@ -1,6 +1,6 @@
 import { Field, InputType } from '@nestjs/graphql'
 
-import UsersInput from 'src/users/models/users.input'
+import UsersInput from 'src/users/dto/users.input'
 
 @InputType()
 class MessageUserConnectInput {

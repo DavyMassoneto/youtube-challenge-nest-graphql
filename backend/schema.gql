@@ -2,7 +2,7 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type AuthPayload {
+type AuthPayloadOutput {
   token: String!
 }
 
@@ -43,7 +43,7 @@ type Query {
 }
 
 type Mutation {
-  login(email: String!): AuthPayload!
+  login(email: String!): AuthPayloadOutput!
   createMessage(data: MessagesInput!): Messages!
   deleteMessage(data: MessageDeleteInput!): MessageDeleteOutput!
   createUser(data: UsersInput!): Users!

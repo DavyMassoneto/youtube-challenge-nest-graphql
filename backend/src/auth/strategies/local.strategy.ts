@@ -4,7 +4,7 @@ import { PassportStrategy } from '@nestjs/passport'
 import { Strategy } from 'passport-local'
 
 import PerformLoginCommand from 'src/auth/commands/impl/perform-login.command'
-import AuthPayload from 'src/auth/dto/auth-payload'
+import AuthPayloadOutput from 'src/auth/dto/auth-payload.output'
 
 @Injectable()
 export default class LocalStrategy extends PassportStrategy(Strategy) {
@@ -12,7 +12,7 @@ export default class LocalStrategy extends PassportStrategy(Strategy) {
     super({ passwordField: 'email', usernameField: 'email' })
   }
 
-  async validate(email: string): Promise<AuthPayload> {
+  async validate(email: string): Promise<AuthPayloadOutput> {
     return this.commandBus.execute(new PerformLoginCommand(email))
   }
 }

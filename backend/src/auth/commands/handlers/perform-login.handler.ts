@@ -18,7 +18,7 @@ export default class PerformLoginHandler implements ICommandHandler<PerformLogin
       throw new NotFoundException(`User with email ${email} does not exist`)
     }
     const payload = new AuthPayload()
-    payload.access_token = this.jwtService.sign({ email: user.email, id: user.id })
+    payload.token = this.jwtService.sign({ email: user.email, id: user.id })
     return payload
   }
 }

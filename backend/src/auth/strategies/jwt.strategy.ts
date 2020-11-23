@@ -5,12 +5,16 @@ import { ExtractJwt, Strategy } from 'passport-jwt'
 
 import JwtValidateCommand from 'src/auth/commands/impl/jwt-validate.command'
 import JwtDto from 'src/auth/dto/jwt.dto'
+import JwtConfigService from 'src/config/jwt.config.service'
 import Users from 'src/users/models/users.entity'
 
 @Injectable()
 export default class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(private readonly commandBus: CommandBus) {
-    super({ jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken() })
+    super({
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      secretOrKey: new JwtConfigService().createJwtOptions().secret,
+    })
   }
 
   async validate(payload: JwtDto): Promise<Users> {

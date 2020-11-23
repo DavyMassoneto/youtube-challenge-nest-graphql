@@ -1,7 +1,13 @@
+import { UseGuards } from '@nestjs/common'
 import { CommandBus, QueryBus } from '@nestjs/cqrs'
 import { Args, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql'
 
+import CtxUser from 'src/auth/decorators/ctx-user.decorator'
+import JwtAuthGuard from 'src/auth/guards/jwt-auth.guard'
 import CreateMessageCommand from 'src/messages/commands/impl/create-message.command'
+import DeleteMessageCommand from 'src/messages/commands/impl/delete-message.command'
+import MessageDeleteInput from 'src/messages/dto/message-delete.input'
+import MessageDeleteOutput from 'src/messages/dto/message-delete.output'
 import MessagesInput from 'src/messages/dto/messages.input'
 import Messages from 'src/messages/models/messages.entity'
 import MessageQuery from 'src/messages/queries/impl/message.query'
@@ -32,6 +38,15 @@ export default class MessagesResolver {
   @Mutation(() => Messages)
   public async createMessage(@Args('data') input: MessagesInput): Promise<Messages> {
     return await this.commandBus.execute(new CreateMessageCommand(input.content, input.user))
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Mutation(() => MessageDeleteOutput)
+  public async deleteMessage(
+    @Args('data') input: MessageDeleteInput,
+    @CtxUser() user: Users,
+  ): Promise<MessageDeleteOutput> {
+    return await this.commandBus.execute(new DeleteMessageCommand(input.messageId, user.id))
   }
 
   @ResolveField('user', () => Users)

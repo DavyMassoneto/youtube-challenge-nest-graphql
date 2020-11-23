@@ -29,6 +29,10 @@ type Users {
   deletedAt: DateTime!
 }
 
+type MessageDeleteOutput {
+  status: Boolean!
+}
+
 type Query {
   messages: [Messages!]!
   userMessages(userId: String!): [Messages!]!
@@ -41,6 +45,7 @@ type Query {
 type Mutation {
   login(email: String!): AuthPayload!
   createMessage(data: MessagesInput!): Messages!
+  deleteMessage(data: MessageDeleteInput!): MessageDeleteOutput!
   createUser(data: UsersInput!): Users!
 }
 
@@ -60,4 +65,8 @@ input MessageUserConnectInput {
 
 input UsersInput {
   email: String!
+}
+
+input MessageDeleteInput {
+  messageId: String!
 }

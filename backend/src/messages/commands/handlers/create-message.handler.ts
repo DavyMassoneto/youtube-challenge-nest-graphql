@@ -3,7 +3,7 @@ import { getCustomRepository } from 'typeorm'
 
 import CreateMessageCommand from 'src/messages/commands/impl/create-message.command'
 import Messages from 'src/messages/models/messages.entity'
-import MessagesRepository from 'src/messages/repositories/messages.repository'
+import MessageRepository from 'src/messages/repositories/message.repository'
 import CreateUserCommand from 'src/users/commands/impl/create-user.command'
 import Users from 'src/users/models/users.entity'
 
@@ -25,7 +25,7 @@ export default class CreateMessageHandler implements ICommandHandler<CreateMessa
       const savedUser: Users = await this.commandBus.execute(new CreateUserCommand(command.user.create.email))
       message.userId = savedUser.id
     }
-    const messageRepository = getCustomRepository(MessagesRepository)
+    const messageRepository = getCustomRepository(MessageRepository)
     return messageRepository.save(message)
   }
 }

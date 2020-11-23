@@ -14,7 +14,7 @@ export default class CreateUserHandler implements ICommandHandler<CreateUserComm
 
   async execute(command: CreateUserCommand): Promise<Users> {
     const email = command.email.toLowerCase().trim()
-    const found = this.queryBus.execute(new EmailUserQuery(email))
+    const found = await this.queryBus.execute(new EmailUserQuery(email))
 
     if (found) {
       throw new BadRequestException(`Cannot register with email ${email}`)

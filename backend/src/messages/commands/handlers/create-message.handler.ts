@@ -28,7 +28,7 @@ export default class CreateMessageHandler implements ICommandHandler<CreateMessa
       message.userId = savedUser.id
     }
     const messageRepository = getCustomRepository(MessageRepository)
-    const createdMessage = messageRepository.save(message)
+    const createdMessage = await messageRepository.save(message)
 
     await this.pubSub.publish('messageAdded', { messageAdded: createdMessage })
 

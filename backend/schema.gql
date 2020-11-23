@@ -45,6 +45,7 @@ type Query {
 type Mutation {
   login(email: String!): AuthPayloadOutput!
   createMessage(data: MessagesInput!): Messages!
+  editMessage(data: MessageEditInput!, messageId: String!): Messages!
   deleteMessage(data: MessageDeleteInput!): MessageDeleteOutput!
   createUser(data: UsersInput!): Users!
 }
@@ -67,10 +68,16 @@ input UsersInput {
   email: String!
 }
 
+input MessageEditInput {
+  content: String!
+  userId: String!
+}
+
 input MessageDeleteInput {
   messageId: String!
 }
 
 type Subscription {
   messageAdded: Messages!
+  messageEdited(messageId: String): Messages!
 }

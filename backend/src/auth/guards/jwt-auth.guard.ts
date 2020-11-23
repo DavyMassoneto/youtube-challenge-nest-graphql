@@ -7,6 +7,8 @@ import { Request } from 'express'
 export default class JwtAuthGuard extends AuthGuard('jwt') {
   getRequest(context: ExecutionContext): Request {
     const ctx = GqlExecutionContext.create(context)
-    return ctx.getContext().req
+    const { req, connection } = ctx.getContext()
+
+    return connection && connection.context && connection.context.headers ? connection.context : req
   }
 }

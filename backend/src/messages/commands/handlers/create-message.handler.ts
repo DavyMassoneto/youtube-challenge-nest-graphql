@@ -1,4 +1,6 @@
+import { Inject } from '@nestjs/common'
 import { CommandBus, CommandHandler, ICommandHandler } from '@nestjs/cqrs'
+import { PubSub } from 'graphql-subscriptions'
 import { getCustomRepository } from 'typeorm'
 
 import CreateMessageCommand from 'src/messages/commands/impl/create-message.command'
@@ -9,7 +11,7 @@ import Users from 'src/users/models/users.entity'
 
 @CommandHandler(CreateMessageCommand)
 export default class CreateMessageHandler implements ICommandHandler<CreateMessageCommand> {
-  constructor(private readonly commandBus: CommandBus) {}
+  constructor(private readonly commandBus: CommandBus, @Inject('PUB_SUB') private readonly pubSub: PubSub) {}
 
   async execute(command: CreateMessageCommand): Promise<Messages> {
     const message = new Messages()
@@ -26,6 +28,10 @@ export default class CreateMessageHandler implements ICommandHandler<CreateMessa
       message.userId = savedUser.id
     }
     const messageRepository = getCustomRepository(MessageRepository)
-    return messageRepository.save(message)
+    const createdMessage = messageRepository.save(message)
+
+    await this.pubSub.publish('messageAdded', { messageAdded: createdMessage })
+
+    return createdMessage
   }
 }

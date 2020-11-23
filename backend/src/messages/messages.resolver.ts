@@ -1,6 +1,7 @@
-import { UseGuards } from '@nestjs/common'
+import { Inject, UseGuards } from '@nestjs/common'
 import { CommandBus, QueryBus } from '@nestjs/cqrs'
-import { Args, Mutation, Parent, Query, ResolveField, Resolver } from '@nestjs/graphql'
+import { Args, Mutation, Parent, Query, ResolveField, Resolver, Subscription } from '@nestjs/graphql'
+import { PubSub } from 'graphql-subscriptions'
 
 import CtxUser from 'src/auth/decorators/ctx-user.decorator'
 import JwtAuthGuard from 'src/auth/guards/jwt-auth.guard'
@@ -18,7 +19,11 @@ import UserQuery from 'src/users/queries/impl/user.query'
 
 @Resolver(() => Messages)
 export default class MessagesResolver {
-  constructor(private readonly commandBus: CommandBus, private readonly queryBus: QueryBus) {}
+  constructor(
+    private readonly commandBus: CommandBus,
+    private readonly queryBus: QueryBus,
+    @Inject('PUB_SUB') private readonly pubSub: PubSub,
+  ) {}
 
   @Query(() => [Messages])
   public async messages(): Promise<Messages[]> {
@@ -47,6 +52,11 @@ export default class MessagesResolver {
     @CtxUser() user: Users,
   ): Promise<MessageDeleteOutput> {
     return await this.commandBus.execute(new DeleteMessageCommand(input.messageId, user.id))
+  }
+
+  @Subscription(() => Messages)
+  messageAdded(): AsyncIterator<Messages> {
+    return this.pubSub.asyncIterator('messageAdded')
   }
 
   @ResolveField('user', () => Users)

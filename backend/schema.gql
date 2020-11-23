@@ -70,3 +70,7 @@ input UsersInput {
 input MessageDeleteInput {
   messageId: String!
 }
+
+type Subscription {
+  messageAdded: Messages!
+}

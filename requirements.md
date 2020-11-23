@@ -6,7 +6,8 @@
 - [x] O usuário precisa poder autenticar via e-mail
 - [x] O usuário precisa poder postar uma mensagem no mural
 - [x] (opcional) A mensagem pode ser deletada
-- [ ] Gerar comunicação final com Swagger
+- [ ] Gerar documentação final com Swagger
+- [ ] Integrar DataLoader
 
 ## Requisitos não-funcionais
 - Nest.js
